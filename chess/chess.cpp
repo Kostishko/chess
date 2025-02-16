@@ -2,22 +2,42 @@
 //
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 #define BLOCK (char)178
 
-int cellWidth, cellHeight;
-
-
+int cellWidth, cellHeight, widthAdj, heightAdj;
 
 int main()
 {
 
     cellHeight = 4;
     cellWidth = 5;
+    
+    if (cellWidth % 2 == 0)
+    {
+        widthAdj = 1;
+    }
+    else
+    {
+        widthAdj = 0;
+    }
 
-    std::cout << "Hello World!\n";
+    if (cellHeight % 2 == 0)
+    {
+        heightAdj = 0;
+    }
+    else
+    {
+        heightAdj = 1;
+    }
 
+    cout << "Chess picture!\n";
+    cout << "Cell width is " + to_string(cellWidth);
+    cout<< " \n";
+    cout << "Cell height is " + to_string(cellHeight);
+    cout << " \n";
     
 
     for (int i = 0; i < cellHeight * 8 +1; i++)
@@ -30,37 +50,71 @@ int main()
                 continue;
             }
 
-            if (j % 5 == 2)
+            if (j % cellWidth == cellWidth/2)
             {   
-                if (i == cellHeight/2 || i == cellHeight*2 - cellHeight/2)
+                if (i == cellHeight/2 + heightAdj || i == cellHeight*2 - cellHeight/2)
+                {
+                    cout << "B";
+                    continue;                    
+                }
+
+                if (i == cellHeight * 7 - cellHeight / 2 || i == cellHeight * 8 - cellHeight / 2)
+                {
+                    cout << "W";
+                    continue;
+
+                }
+            }
+
+            if (j % cellWidth == cellWidth/2+1 &&
+                (i==cellHeight*2-cellHeight/2 || i == cellHeight * 7 - cellHeight / 2))
+            {
+                cout << "P";
+                continue;
+            }
+
+            if (i == cellHeight - cellHeight / 2  ||
+                i == cellHeight * 8 - cellHeight / 2)
+            {
+                if (j == cellWidth / 2 +1 ||
+                    j == cellWidth * 8 - cellWidth / 2 + widthAdj)
+                {
+                    cout << "R";
+                    continue;
+                }
+                if (j == cellWidth * 2 - cellWidth / 2 + widthAdj || 
+                    j == cellWidth * 7 - cellWidth / 2 + widthAdj)
+                {
+                    cout << "H";
+                    continue;
+                }
+                if (j == cellWidth * 3 - cellWidth / 2 + widthAdj || 
+                    j == cellWidth * 6 - cellWidth / 2 + widthAdj)
                 {
                     cout << "B";
                     continue;
-                    
                 }
+            }
+
+            if ((i == cellHeight / 2 + heightAdj && j == cellWidth * 4 - cellWidth / 2 + widthAdj) ||
+                (i == cellHeight * 8 - cellHeight / 2 && j == cellWidth * 5 - cellWidth / 2 + widthAdj))
+            {
+                cout << "Q";
+                continue;
+            }
+
+            if ((i == cellHeight / 2 + heightAdj && j == cellWidth * 5 - cellWidth / 2 + widthAdj) ||
+                (i == cellHeight * 8 - cellHeight / 2 && j == cellWidth * 4 - cellWidth / 2 + widthAdj))
+            {
+                cout << "K";
+                continue;
             }
             
 
-
             cout << " ";
-                
-            
           
         }
         cout << "\n";
 
     }
-
-
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
